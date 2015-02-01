@@ -1,7 +1,7 @@
 class CreateItems < ActiveRecord::Migration
   def change
     create_table :items do |t|
-      t.integer :item_id
+      t.integer :item_id, :limit => 8
       t.string :title
       t.string :sub_title
       t.string :picture_url
@@ -17,6 +17,8 @@ class CreateItems < ActiveRecord::Migration
       t.string :view_url
       t.integer :category_id
       t.string :category_name
+      t.string :formula
+      t.string :game_platform
       
       t.timestamps
     end
