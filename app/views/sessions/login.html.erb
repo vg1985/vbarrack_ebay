@@ -1,0 +1,155 @@
+<div class="container">
+	<div class="row">
+		<div class="span5 offset3 well">
+			<legend>
+				Sign In
+			</legend>
+			<% if flash['error'].present? %>
+			<div class="alert alert-error" id="error">
+				<a class="close" data-dismiss="alert" href="#">×</a><%= flash['error'] %>
+			</div>
+			<% end %>
+			
+			<div class="alert alert-success hide" id="success_msg">
+				<a class="close" data-dismiss="alert" href="#">×</a><span id="success">An email has been sent to your registered email address.</span>
+			</div>
+			<%= form_tag authenticate_sessions_path, {:id => :login} do %>
+			<form method="POST" action="" accept-charset="UTF-8" id="login">
+				<p>
+					<input type="text" id="username" class="span4" name="username" placeholder="Email" maxlength="255">
+					</br><span id="username_error" class="text-error"></span>
+				</p>
+				<p>
+				    <input type="password" id="password" class="span4" name="password" placeholder="Password" maxlength="50">
+					</br><span id="password_error" class="text-error"></span>
+				</p>
+				
+				
+
+				<p>
+					<button type="submit" name="submit" class="btn btn-primary" id="signin">Sign in</button>
+					<a href="#" id="forgot_password">Forgot Password?</a>
+				</p>
+			<% end %>
+		</div>
+	</div>
+</div>	
+
+<div class="modal hide fade" id="myModal">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal">x</button>
+		<sapn>Get Password</span>
+	</div>
+	<div class="modal-body">
+		<div class="alert alert-error hide" id="reset_error">
+				<a class="close" data-dismiss="alert" href="#">×</a>Email does not exist!
+		</div>
+		<%= form_tag "", {:id => :reset_password} do %>
+			<p>
+				<input type="text" class="span3" name="eid" id="email" placeholder="Email">
+				</br><span id="email_error" class="text-error"></span>
+			</p>
+			<p>Enter your registerd email in above box. An email will be send to you on registered email address.</p>
+			<p>
+				<button type="submit" class="btn btn-primary">
+					Submit
+				</button>
+			</p>
+		 <% end %>
+	</div>
+</div>
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		
+	
+
+		jQuery("#forgot_password").click(function(event) {
+			event.preventDefault();
+			jQuery("#email").focus();
+			jQuery("#myModal").removeClass("hide");
+			jQuery("#myModal").removeClass("fade");
+		});
+		
+		jQuery(".close").click(function(event) {
+			event.preventDefault();
+			jQuery("#myModal").addClass("hide");
+		});
+		
+		
+		jQuery("#reset_password").submit(function(){
+			jQuery("#email_error").text('');
+			var email = jQuery("#email").val().trim();
+			var bool = true
+			if (email.length > 0) {
+				var rege = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+				if(!rege.test(email))	{
+					jQuery("#email_error").text('Please enter valid email.');
+					bool = false
+				}
+			} else {
+				jQuery("#email_error").text('Please enter email.');	
+				bool = false
+			}
+			if(bool) {
+				var dataString = 'email='+ email;  
+      
+			    $.ajax({  
+			      type: "POST",  
+			      url: "<%= retry_password_sessions_path%>",  
+			      data: dataString,
+			      DataType: "script",  
+			      success: function(data) {  
+			         if(data == 'true') {
+			         	jQuery("#myModal").addClass("hide");
+			         	jQuery("#success_msg").removeClass("hide");
+			         } else {
+			         	jQuery("#reset_error").removeClass("hide");
+			         }
+			      }	
+			    });
+			} else {
+				jQuery("#email").focus();	
+			}
+			return false;
+		})	
+		
+		jQuery("#login").submit(function(){
+			jQuery("#password_error").text('');
+			jQuery("#username_error").text('');
+			
+			var username = jQuery.trim(jQuery("#username").val());
+			var password = jQuery.trim(jQuery("#password").val());
+			
+			
+			var bool = false
+			
+			
+			if (password.length < 1) {
+				
+				jQuery("#password_error").text('Please enter password.');
+				bool = "passowrd"
+			}	
+			
+			if(username.length > 1) {
+				var rege = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+				if(!rege.test(username))	{
+					jQuery("#username_error").text('Please enter valid email.');
+					bool = "username"	
+			    }
+				
+			} else {
+				jQuery("#username_error").text('Please enter email.');
+				bool = "username"
+			}
+			if(bool) {
+			   jQuery("#"+bool).focus();
+			   return false;
+			} else {
+				return true;	
+			}
+				
+		});
+		
+	});
+</script>
+

@@ -1,0 +1,71 @@
+<div>
+	<ul class="breadcrumb">
+		<li><%= link_to 'Itens', items_path %><span class="divider">/</span></li>
+		<li>Edit Item Formula Details</li>
+	</ul>
+</div>
+
+<% if flash[:notice].present? %>
+	<div class="alert alert-success" id="success_msg">
+		<a class="close" data-dismiss="alert" href="#">×</a><span id="success"><%= flash[:notice]%></span>
+	</div>
+<% end %>
+
+<% if flash[:error].present? %>
+	<div class="alert alert-error" id="error">
+		<a class="close" data-dismiss="alert" href="#">×</a><%= flash[:error].html_safe %>
+	</div>
+<% end %>
+
+
+<div class="row-fluid sortable">
+	<div class="box span12">
+		<div class="box-header well" data-original-title>
+			<h2>Edit Item Formula Details</h2>
+		</div>
+		<div class="box-content">
+			<%= form_for @item, url: set_formula_path(@item), :html => {:class => "form-horizontal", :method => :put}  do |f| %>
+				<fieldset>
+
+					<div class="control-group" id="first_name" style="padding-top:2%">
+						<label class="control-label" for="inputError" style="margin-left:15%;float:left"><strong>Item ID:</strong></label>
+						<div class="controls" style="margin-left:30%"><%= @item.item_id %></div>
+					</div>
+					
+					<div class="control-group" id="first_name" style="padding-top:2%">
+						<label class="control-label" for="inputError" style="margin-left:15%;float:left"><strong>Item Title:</strong></label>
+						<div class="controls" style="margin-left:30%"><%= @item.title %></div>
+					</div>
+				
+					<div class="control-group" id="last_name" style="padding-top:2%">
+						<label class="control-label" for="inputError" style="margin-left:15%;float:left"><strong>Formula:</strong> </label>
+						<div class="controls">
+							<%= f.text_field :formula, :style => "margin-left:15px" %></br>Note: only use base_price for having base price in formula
+							
+						</div>
+					</div>
+					
+					<div class="control-group" id="last_name" style="padding-top:2%">
+						<label class="control-label" for="inputError" style="margin-left:15%;float:left"><strong>Game Platform:</strong> </label>
+						<div class="controls">
+							<%= f.select(:game_platform, ['XBOX', 'PS'], {}, 	{:style => "margin-left:15px"}) %>
+						</div>
+					</div>
+					
+					
+					
+					<div class="form-actions">
+						<button type="submit" class="btn btn-primary" style="margin-left:20%;float:left">
+							Update
+						</button>
+						<button class="btn" id="cancel" type="button" style="margin-left:2%;float:left" onclick="javascript:history.back();">
+							Cancel
+						</button>
+					</div>
+	           </fieldset>
+			<% end %>
+		</div>
+	</div><!--/span-->
+
+</div><!--/row-->
+

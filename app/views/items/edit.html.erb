@@ -1,0 +1,61 @@
+<div>
+	<ul class="breadcrumb">
+		<li><%= link_to 'Itens', items_path %><span class="divider">/</span></li>
+		<li>Edit Item Price</li>
+	</ul>
+</div>
+
+<% if flash[:notice].present? %>
+	<div class="alert alert-success" id="success_msg">
+		<a class="close" data-dismiss="alert" href="#">×</a><span id="success"><%= flash[:notice]%></span>
+	</div>
+<% end %>
+
+<% if flash[:error].present? %>
+	<div class="alert alert-error" id="error">
+		<a class="close" data-dismiss="alert" href="#">×</a><%= flash[:error].html_safe %>
+	</div>
+<% end %>
+
+
+<div class="row-fluid sortable">
+	<div class="box span12">
+		<div class="box-header well" data-original-title>
+			<h2>Edit Item Price</h2>
+		</div>
+		<div class="box-content">
+			<%= form_tag item_path(params[:id]),  {:class => "form-horizontal", :method => :put}  do |f| %>
+				<fieldset>
+
+					<div class="control-group" id="first_name" style="padding-top:2%">
+						<label class="control-label" for="inputError" style="margin-left:15%;float:left"><strong>Item ID:</strong></label>
+						<div class="controls" style="margin-left:30%"><%= @item[:item_id]%></div>
+					</div>
+					
+					<div class="control-group" id="first_name" style="padding-top:2%">
+						<label class="control-label" for="inputError" style="margin-left:15%;float:left"><strong>Item Title:</strong></label>
+						<div class="controls" style="margin-left:30%"><%= @item[:title]%></div>
+					</div>
+				
+					<div class="control-group" id="last_name" style="padding-top:2%">
+						<label class="control-label" for="inputError" style="margin-left:15%;float:left"><strong>Buy it now Price:</strong> </label>
+						<div class="controls">
+							<input type="tetx" name="price" value="<%= @item[:buy_it_now_price]%>" style="margin-left:5%">
+						</div>
+					</div>
+					
+					<div class="form-actions">
+						<button type="submit" class="btn btn-primary" style="margin-left:20%;float:left">
+							Update
+						</button>
+						<button class="btn" id="cancel" type="button" style="margin-left:2%;float:left" onclick="javascript:history.back();">
+							Cancel
+						</button>
+					</div>
+	           </fieldset>
+			<% end %>
+		</div>
+	</div><!--/span-->
+
+</div><!--/row-->
+

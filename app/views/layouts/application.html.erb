@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Vbarrack: Ebay Store</title>
+		<%= stylesheet_link_tag "bootstrap-cerulean", :media => "screen, print"  %>
+		<%= stylesheet_link_tag "application"%>
+		<%= javascript_include_tag "application" %>
+		<%= csrf_meta_tags %>
+
+		<%= yield :head %>
+	
+	</head>
+
+	<body id="com">
+		<!-- topbar starts -->
+		<div class="navbar">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<a class="brand" href="<%= root_url %>"> Vbarrack: Ebay Store <span style="margin-top:10px;">
+						<%#= image_tag "stepleaderlogo.jpeg"%> </span>
+					</a>
+					<div class="pull-right" style="margin-top:25px;">
+					<span>Welcome &nbsp; <%= session[:name] %></span>&nbsp;&nbsp;
+						
+						<span style="padding-left:10px;"><b><%= link_to "Logout", logout_sessions_path, :style => "color:#ffffff" %></span>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- topbar ends -->
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<!-- left menu starts -->
+				<div class="span2 main-menu-span">
+					<div class="well nav-collapse sidebar-nav">
+						<ul class="nav nav-tabs nav-stacked main-menu">
+							<li>
+								<a class="ajax-link" href="#" onclick="alert('Under Implementation');return false;"><span class="hidden-tablet">Admin Users</span></a>
+							
+							</li>
+							<li>
+								<a class="ajax-link" href="/items"><span class="hidden-tablet">Items</span></a>
+								<ul class="children" style="display: block;list-style:none">
+									<% @country_wise_items.each do |item_wise_countrys|%>
+										<li style="background-image: none;"><a href="<%= items_path(:country => item_wise_countrys.country) %>"><%= item_wise_countrys.country %>&nbsp;(<%= item_wise_countrys.item_count %>)</a></li>
+									<% end %>
+								</ul>
+							</li>
+							
+							<li>
+								<a class="ajax-link" href="/items/set_formulas"><span class="hidden-tablet">Set Items formula</span></a>
+									
+							<li>
+								<a class="ajax-link" href="#" onclick="alert('Under Implementation');return false;"<i class="icon-user"></i><span class="hidden-tablet">Orders</span></a>
+							</li>
+							
+							<li>
+								<a class="ajax-link" href="#" onclick="alert('Under Implementation');return false;"><span class="hidden-tablet">Settings</span></a>
+							</li>	
+									
+									
+							
+						</ul>
+					</div><!--/.well -->
+				</div><!--/span-->
+				<!-- left menu ends -->
+
+				<div id="content" class="span10">
+					<!-- content starts -->
+					<%= yield %>
+					<footer>
+						<p class="pull-left">
+							&copy; <a href="#" target="_blank">Vbarrack</a> <%= Time.now.year%>
+						</p>
+						<p class="pull-right">
+							Powered by: <a href="#">Vbarrack</a>
+						</p>
+					</footer>
+				</div>
+				
+
+	</body>
+</html>

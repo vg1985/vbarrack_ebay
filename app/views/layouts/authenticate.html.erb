@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Vbarrack: Ebay Store</title>
+
+		<style type="text/css">
+			/* Override some defaults */
+			html, body {
+				background-color: #eee;
+			}
+			body {
+				padding-top: 150px;
+			}
+
+			.footer {
+				position: relative;
+				margin-top: -150px; /* negative value of footer height */
+				height: 150px;
+				clear: both;
+				padding-top: 20px;
+				color: #fff;
+			}
+
+		</style>
+
+		<link id="bs-css" href="/assets/bootstrap-cerulean.css" rel="stylesheet">
+		<style type="text/css">
+			body {
+				padding-bottom: 40px;
+			}
+			.sidebar-nav {
+				padding: 9px 0;
+			}
+		</style>
+		<%= stylesheet_link_tag "application"%>
+		<%= javascript_include_tag "application" %>
+	</head>
+	
+		
+		<body>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container-fluid">
+					<a class="brand" href="#"> Vbarrack: Ebay Store <span style="margin-top:0px;"><%#= image_tag "stepleaderlogo.jpeg"%></span></a>
+				</div>
+			</div>
+		</div>
+		<%= yield %>
+		<footer>
+			<p class="pull-left">
+				&copy; <a href="#" target="_blank">Vbarrack: Ebay Store</a> <%= Time.now.year%>
+			</p>
+			<p class="pull-right">
+				Powered by: <a href="#">Vbarrack</a>
+			</p>
+		</footer>
+	
+	</body>
+	<script type="text/javascript">
+		jQuery(document).ready(function() {
+			jQuery("#close").click(function(event) {
+				event.preventDefault();
+				jQuery("#error").hide('slow');
+			});
+		});
+	</script>
+</html>
+
