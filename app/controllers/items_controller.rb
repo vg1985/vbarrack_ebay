@@ -39,16 +39,19 @@ class ItemsController < ApplicationController
   
   def edit
     item_details = EbayClient.api.get_item(:item_ID => params[:id])
+    #raise item_details.inspect
     @item = item_details.payload[:item]
     redirect_to items_path unless @item.present?
   end
   
   def update
     #abort
-    @ebay = EbayClient.api.revise_item(:item => {:item_ID => params[:id],:buy_it_now_price =>  params[:price]})
-    if(@ebay.present? && @ebay.errors.count > 1) 
+    @ebay = EbayClient.api.revise_inventory_status(:inventory_status => {:item_ID => params[:id], :start_price => params[:price]})
+    if(@ebay.present? && @ebay.errors.count > 0) 
        flash[:error] = @ebay.errors.join('</br>')
     else 
+       @item = Item.find_by_item_id(params[:id].to_i)
+       @item.update_attributes({:buy_it_now_price => params[:price]})
        flash[:notice] = "Price updated successfully."
     end  
     redirect_to edit_item_path(params[:id])
