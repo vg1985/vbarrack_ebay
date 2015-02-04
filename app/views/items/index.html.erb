@@ -59,7 +59,7 @@
 								<td class="center"><%= item.formula %></td>
 								<td class="center"><%= item.quantity_available %></td>
 								<td class="center"><%= item.currency %>&nbsp;<%= item.buy_it_now_price %></td>
-								<td class="center"><input type="text" name="price_<%= item.item_id%>" id="price_<%= item.item_id%>" style="width:90%" value="<%=  params[:country].present? ? new_price(item.formula , params[:country], @country_bprice) : ''%>"></td>
+								<td class="center"><input type="text" name="price_<%= item.item_id%>" id="price_<%= item.item_id%>" style="width:90%" value="<%=  new_price(item.formula , item.country, @country_bprice)%>"></td>
 								<td class="center">
 									<a class="btn btn-success" href="/items/<%= item.item_id %>/edit"> Edit Price</a>
 								</td>
