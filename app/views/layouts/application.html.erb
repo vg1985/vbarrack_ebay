@@ -52,7 +52,12 @@
 							
 							<li>
 								<a class="ajax-link" href="/set_formulas"><span class="hidden-tablet">Set Items formula</span></a>
-									
+								<ul class="children" style="display: block;list-style:none">
+									<% @country_wise_items.each do |item_wise_countrys|%>
+										<li style="background-image: none;"><a href="<%= set_formulas_path(:country => item_wise_countrys.country) %>"><%= item_wise_countrys.country %>&nbsp;(<%= item_wise_countrys.item_count %>)</a></li>
+									<% end %>
+								</ul>
+							</li>
 						
 							<li>
 								<a class="ajax-link" href="#" onclick="alert('Under Implementation');return false;"><span class="hidden-tablet">Settings</span></a>

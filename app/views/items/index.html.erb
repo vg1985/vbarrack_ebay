@@ -4,12 +4,20 @@
 	</div>
 <% end %>
 
+
 <div class="row-fluid sortable">
 	<div class="box span12">
 		
 		<div class="box-header well" data-original-title>
 			<h2> Items</h2>
 		</div>
+		<% if  params[:country].present? && @country_bprice.present? %>
+		<div style="padding-left:10px;padding-top:10px">
+			<h4>Base Price for <%= params[:country]%> Country: <%= @country_bprice.base_price %></h4>
+		</div>
+		<% end %>
+		
+		
 		
 		<div class="box-content">
 			<% if @items.present? %>
@@ -30,7 +38,7 @@
 					 	
 					</tr>
 					<tr>
-						<td width="4%">Select</td>
+						<th width="4%"><input type="checkbox" id="all_chk">&nbsp;All</th>
 						<td width="10%">Item Id</td>
 						<td width="10%">Picture</td>
 						<td width="30%">Item Title</td>
@@ -51,7 +59,7 @@
 								<td class="center"><%= item.formula %></td>
 								<td class="center"><%= item.quantity_available %></td>
 								<td class="center"><%= item.currency %>&nbsp;<%= item.buy_it_now_price %></td>
-								<td class="center"><input type="text" name="price_<%= item.item_id%>" id="price_<%= item.item_id%>" style="width:90%"></td>
+								<td class="center"><input type="text" name="price_<%= item.item_id%>" id="price_<%= item.item_id%>" style="width:90%" value="<%=  params[:country].present? ? new_price(item.formula , params[:country], @country_bprice) : ''%>"></td>
 								<td class="center">
 									<a class="btn btn-success" href="/items/<%= item.item_id %>/edit"> Edit Price</a>
 								</td>
@@ -77,6 +85,13 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
+		jQuery("#all_chk").click(function() {
+			if(jQuery("#all_chk").attr('checked')) {
+				jQuery(".chk").attr('checked', true)
+			} else {
+				jQuery(".chk").attr('checked', false)
+			}
+		})
 		jQuery(".bulk_update").click(function(e){
 			e.preventDefault();
 			var bool = true

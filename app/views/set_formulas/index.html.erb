@@ -4,6 +4,40 @@
 	</div>
 <% end %>
 
+<% if params[:country].present? %>
+
+<div class="row-fluid sortable">
+	<div class="box span12">
+		<div class="box-header well" data-original-title>
+			<h2>Set Base Price for country <%= params[:country]%></h2>
+		</div>
+		
+		
+		<div class="box-content">
+			<%= form_tag country_set_formulas_path, {:class => "form-horizontal", :method => 'post', :id => 'country_base_price'}  do |f| %>
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="inputError">Base Price:</label>
+						<div class="controls">
+							<%= text_field_tag :price, @country.present? ? @country.base_price : '' %>
+						</div>	
+					</div>
+					<%= hidden_field_tag 'country', params[:country]%>
+					
+					<div class="form-actions">
+						<button type="submit" class="btn btn-primary">
+							Submit
+						</button>
+					</div>
+				</fieldset>
+			<% end %>
+	    </div>
+	</div><!--/span-->
+
+</div><!--/row-->
+<% end %>
+
+
 <div class="row-fluid sortable">
 	<div class="box span12">
 		
@@ -39,7 +73,7 @@
 								<td class="center"><a href="<%= item.view_url.force_encoding("UTF-8") %>" target="_blank"><%= item.title.force_encoding("UTF-8") %></a></td>
 								<td class="center"><%= item.formula %></td>
 								<td class="center"><%= item.game_platform %></td>
-								<td class="center"><%= item.category_name %></td>
+								<td class="center"><%= item.category_name.force_encoding("UTF-8")  %></td>
 								<td class="center">
 									<a class="btn btn-success" href="<%= edit_set_formula_path(item)%>"> Edit Formula</a>
 								</td>
@@ -65,26 +99,17 @@
 
 <script type="text/javascript">
 	jQuery(document).ready(function() {
-		jQuery(".bulk_update").click(function(e){
-			e.preventDefault();
-			var bool = true
-			if($(".chk:checked").length < 1) {
-				alert("Please select at least one item.")
-				bool = false
-			}
-			jQuery(".chk:checked").each(function() {
-				var item_id = jQuery(this).val();
-				var new_price = jQuery("#price_"+item_id).val();
-				if(new_price.length < 1){
-					alert("Please enter price for item ID #"+item_id);
-					bool = false
-				}	
-					
-			});
+		jQuery("#country_base_price").submit(function(e){
 			
-			if(bool) {
-				alert("submit");
+			var price = jQuery("#price").val();
+			
+			if($.isNumeric(price)) {
+				return true;
+			} else {
+				alert('Only number is allowed!');
+				return false;
 			}
+			
 		})
 	});
 	
