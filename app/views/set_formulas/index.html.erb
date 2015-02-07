@@ -4,6 +4,7 @@
 	</div>
 <% end %>
 
+
 <% if params[:country].present? %>
 
 <div class="row-fluid sortable">
@@ -38,6 +39,40 @@
 <% end %>
 
 
+	<div class="row-fluid sortable">
+	<div class="box span12">
+		<div class="box-header well" data-original-title>
+			<h2>Search</h2>
+		</div>
+		
+		
+		<div class="box-content">
+			<%= form_tag set_formulas_path, {:class => "form-horizontal", :method => 'get'}  do |f| %>
+				<fieldset>
+					<input type="hidden" name="country" value="<%= params[:country]%>">
+					<div class="control-group">
+						<label class="control-label" for="inputError">Game Platform:</label>
+						<div class="controls">
+							<%= select_tag(:game_plateform, options_for_select(['XBOX', 'PS'], params[:game_plateform]), :include_blank => true) %>
+						</div>
+					</div>
+					
+					<div class="form-actions">
+						<button type="submit" class="btn btn-primary">
+							Search
+						</button>
+						<button class="btn" type ="button" id="cancel_btn">
+							Cancel
+						</button>
+					</div>
+				</fieldset>
+			<% end %>
+	    </div>
+	</div><!--/span-->
+
+</div><!--/row-->
+
+
 <div class="row-fluid sortable">
 	<div class="box span12">
 		
@@ -59,10 +94,11 @@
 				<thead>
 					<tr>
 						<td width="10%">Item Id</td>
-						<td width="35%">Item Title</td>
+						<td width="30%">Item Title</td>
 						<td width="12%">Formula</td>
 						<td width="10%">Game Platform</td>
-						<td width="20%">Category</td>
+						<td width="10%"><%= sortable("game_coins_amount", "Game Coins Amount") %></td>
+						<td width="15%">Category</td>
 						<td width="12%">Action</td>
 					</tr>
 				</thead>
@@ -73,6 +109,7 @@
 								<td class="center"><a href="<%= item.view_url.force_encoding("UTF-8") %>" target="_blank"><%= item.title.force_encoding("UTF-8") %></a></td>
 								<td class="center"><%= item.formula %></td>
 								<td class="center"><%= item.game_platform %></td>
+								<td class="center"><%= item.game_coins_amount %></td>
 								<td class="center"><%= item.category_name.force_encoding("UTF-8")  %></td>
 								<td class="center">
 									<a class="btn btn-success" href="<%= edit_set_formula_path(item)%>"> Edit Formula</a>
@@ -113,5 +150,13 @@
 		})
 	});
 	
+</script>
+
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		jQuery("#cancel_btn").click(function(){
+			location.href = "<%= set_formulas_path %>";
+		});	
+	});
 </script>	
 

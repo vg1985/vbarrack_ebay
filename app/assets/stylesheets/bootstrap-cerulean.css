@@ -4482,4 +4482,16 @@ i[class^="icon-"] {
     page-break-after: avoid;
   }
 }    
+
+td .current {
+    background-position: right center;
+    background-repeat: no-repeat;
+    padding-right: 12px;
+}
+td .asc {
+    background-image: url("/assets/time-up.png");
+}
+td .desc {
+    background-image: url("/assets/time-down.png");
+}
     

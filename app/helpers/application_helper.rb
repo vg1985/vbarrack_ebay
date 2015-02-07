@@ -18,5 +18,16 @@ module ApplicationHelper
    
     new_price
   end
+  
+  def sortable(column, title = nil)
+    title ||= column.titleize
+    css_class = column == params[:sort] ? "current #{sort_direction}" : nil
+    if column == 'created_at' && params[:sort].blank?
+      css_class = "current desc"  
+    end
+    direction = sort_direction == "asc" ? "desc" : "asc"
+    link_to(title, params.merge({:sort => column, :direction => direction}), {:class => css_class})
+  end
+
 
 end

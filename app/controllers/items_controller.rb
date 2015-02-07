@@ -10,6 +10,7 @@ class ItemsController < ApplicationController
         @items = @items.where("country =? ", params[:country])
         @country_bprice = Country.find_by_country(params[:country])
       end  
+      @items = @items.where("game_platform =?", params[:game_plateform]) if params[:game_plateform].present?
       
       respond_to do |format|
         format.html # index.html.erb
