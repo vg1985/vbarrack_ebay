@@ -18,7 +18,7 @@
 		<% end %>
 		
 	<div class="box-content">
-		<%= form_tag bulk_update_items_path, :id => "bulk_form" do %>
+		<%= form_tag "/items/bulk_update", :id => "bulk_form" do %>
 			<% if @items.present? %>
 				<tbody>
 					<tr><td colspan="6">
