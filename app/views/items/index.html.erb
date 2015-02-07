@@ -18,7 +18,7 @@
 		<% end %>
 		
 	<div class="box-content">
-		<%= form_tag bulk_update_items_path.force_encoding("UTF-8"), :id => "bulk_form" do %>
+		<%= form_tag bulk_update_items_path.to_s.force_encoding("UTF-8"), :id => "bulk_form" do %>
 			<% if @items.present? %>
 				<tbody>
 					<tr><td colspan="6">

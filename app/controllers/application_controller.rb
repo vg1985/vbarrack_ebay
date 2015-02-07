@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   
   def check_session
-    redirect_to root_url unless session[:id].present?
+    redirect_to items_url unless session[:id].present?
   end
   
   private
