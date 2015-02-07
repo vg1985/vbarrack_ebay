@@ -7,7 +7,7 @@ module ApplicationHelper
         baseprice_details = Country.find_by_country(is_country)
       end     
       if baseprice_details.present?
-        formula = formula.gsub('base_price', baseprice_details.base_price.to_s)
+        formula = formula.gsub('base_price', "(#{baseprice_details.base_price.to_s})")
         begin
           new_price = eval(formula).round(2)
         rescue

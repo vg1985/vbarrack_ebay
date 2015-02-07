@@ -59,5 +59,16 @@ class ItemsController < ApplicationController
     end  
     redirect_to edit_item_path(params[:id])
   end
-
+  
+  def bulk_update
+    if(params[:item].present?)
+      params[:item].each do |item_id|
+        Item.delay.item_update(item_id, params["price_#{item_id}"])
+      end
+    end  
+    
+    flash[:notice] = "Price update process has been queued up. Please refresh the page after some time to reflect the updated price."
+    redirect_to items_path
+  end
+  
 end

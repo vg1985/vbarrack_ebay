@@ -40,6 +40,11 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.8.0)
+    delayed_job (4.0.6)
+      activesupport (>= 3.0, < 5.0)
+    delayed_job_active_record (4.0.3)
+      activerecord (>= 3.0, < 5.0)
+      delayed_job (>= 3.0, < 4.1)
     ebay_client (0.1.0)
       activesupport (>= 3.1.0)
       savon (< 2.0.0)
@@ -326,6 +331,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 3.2.1)
+  delayed_job_active_record
   ebay_client (~> 0.1.0)
   jquery-rails
   mysql

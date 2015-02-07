@@ -4,6 +4,7 @@ gem 'rails', '3.2.13'
 gem 'ebay_client', '~> 0.1.0'
 gem 'mysql'
 gem "will_paginate", "~> 3.0.4"
+gem "delayed_job_active_record"
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 

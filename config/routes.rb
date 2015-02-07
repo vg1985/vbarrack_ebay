@@ -12,13 +12,24 @@ Ebay::Application.routes.draw do
 
   # Sample resource route (maps HTTP verbs to controller actions automatically):
     
-    resources :set_formulas do
+   resources :jobs do
+     collection do
+       get :pending
+       get :completed
+     end
+   end
+   
+   resources :set_formulas do
       collection do
         post :country
       end
     end
     
-     resources :items
+   resources :items do
+     collection do
+       post :bulk_update
+     end
+   end
      
      resources :sessions, :only => [:login, :logout, :authenticate, :retry_password] do
       
