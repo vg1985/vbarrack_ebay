@@ -67,8 +67,8 @@ class ItemsController < ApplicationController
       end
     end  
     
-    flash[:notice] = "Price update process has been queued up. Please refresh the page after some time to reflect the updated price."
-    redirect_to items_path
+    flash[:notice] = "Price update process has been queued up. Please refresh the items page after some time to reflect the updated price."
+    redirect_to pending_jobs_path
   end
   
 end
