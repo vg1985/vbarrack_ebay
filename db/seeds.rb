@@ -4,4 +4,6 @@
 # Examples:
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-User.create(name: 'Vineet', email: 'vk.agile@gmail.com',  password: '492b03ee4a47dcc8f4d9b37e523c2ab6e69ba928')
+#User.create(name: 'Vineet', email: 'vk.agile@gmail.com',  password: '492b03ee4a47dcc8f4d9b37e523c2ab6e69ba928')
+User.create(name: 'CS', email: 'cs@vbarrack.com',  password: '8118d920074fe0666d026284f28e497936812635')
+User.create(name: 'Rick', email: 'rick@synerweb.hk',  password: '8118d920074fe0666d026284f28e497936812635')
