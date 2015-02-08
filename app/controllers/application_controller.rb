@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  helper_method  :sort_direction
   
   def check_session
     redirect_to items_url unless session[:id].present?
@@ -72,5 +73,9 @@ class ApplicationController < ActionController::Base
       
     end
     
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
   end
 end

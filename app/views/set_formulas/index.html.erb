@@ -18,9 +18,15 @@
 			<%= form_tag country_set_formulas_path, {:class => "form-horizontal", :method => 'post', :id => 'country_base_price'}  do |f| %>
 				<fieldset>
 					<div class="control-group">
-						<label class="control-label" for="inputError">Base Price:</label>
+						<label class="control-label" for="inputError">Base Price For XBOX:</label>
 						<div class="controls">
 							<%= text_field_tag :price, @country.present? ? @country.base_price : '' %>
+						</div>	
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="inputError">Base Price For PS:</label>
+						<div class="controls">
+							<%= text_field_tag :ps_price, @country.present? ? @country.ps_base_price : '' %>
 						</div>	
 					</div>
 					<%= hidden_field_tag 'country', params[:country]%>
@@ -139,12 +145,21 @@
 		jQuery("#country_base_price").submit(function(e){
 			
 			var price = jQuery("#price").val();
+			var ps_price = jQuery("#ps_price").val();
+			var bool = true;
 			
-			if($.isNumeric(price)) {
+			if(!$.isNumeric(price)) {
+				alert('Only number is allowed!. Please enter number for XBOX base price');
+				bool = false;
+			}
+			
+			if(!$.isNumeric(ps_price)) {
+				alert('Only number is allowed!. Please enter number for PS base price');
+				bool = false;
+			}  
+			
+			if(bool) {
 				return true;
-			} else {
-				alert('Only number is allowed!');
-				return false;
 			}
 			
 		})

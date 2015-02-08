@@ -5,7 +5,14 @@ class ItemsController < ApplicationController
   def index
     sync_with_ebay if params[:sync] == "sync"
     if @country_wise_items.present?
-      @items = Item.active.paginate(:page => params[:page]).order("end_time ASC")
+      @items = Item.active.paginate(:page => params[:page])
+    
+      if params[:sort].present?
+       @items = @items.order("#{params[:sort]} #{params[:direction]}")
+      else
+        @items = @items.order("end_time ASC")
+      end 
+      
       if params[:country].present?
         @items = @items.where("country =? ", params[:country])
         @country_bprice = Country.find_by_country(params[:country])

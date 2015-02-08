@@ -49,7 +49,12 @@
 
 		<% if  params[:country].present? && @country_bprice.present? %>
 		<div style="padding-left:10px;padding-top:10px">
-			<h4>Base Price for <%= params[:country]%> Country: <%= @country_bprice.base_price %></h4>
+			<strong>Base Price for XBOX:</strong><span style="padding-left:10px"> <%= @country_bprice.base_price %></span>
+			
+		</div>
+		<div style="padding-left:10px;padding-top:10px">
+			
+			<strong>Base Price for PS:</strong><span style="padding-left:10px"><%= @country_bprice.ps_base_price %></span>
 		</div>
 		<% end %>
 		
@@ -74,17 +79,17 @@
 					 	
 					</tr>
 					<tr>
-						<th width="4%"><input type="checkbox" id="all_chk">&nbsp;All</th>
+						<th width="3%"><input type="checkbox" id="all_chk">&nbsp;All</th>
 						<td width="9%">Item Id</td>
 						<td width="8%">Picture</td>
-						<td width="22%">Title</td>
-						<td width="8%">Game Platform</td>
-						
+						<td width="24%">Title</td>
+						<td width="7%">Game Platform</td>
+						<td width="7%"><%= sortable("game_coins_amount", "Game Coins Amount") %></td>
 						<td width="10%">Equation</td>
-						<td width="8%">Quantity Available</td>
+						<td width="6%">Quantity Available</td>
 						<td width="7%">Price</td>
 						<td width="8%">New Price</td>
-						<td width="10%">Actions</td>
+						<td width="11%">Actions</td>
 					</tr>
 				</thead>
 				<% if @items.present? %>
@@ -95,22 +100,23 @@
 								<td class="center"><img src="<%= item.picture_url %>" height="50px" width="75px"></td>
 								<td class="center"><a href="<%= item.view_url %>" target="_blank"><%= item.title %></a></td>
 								<td class="center"><%= item.game_platform %></td>
+								<td class="center"><%= item.game_coins_amount %></td>
 								<td class="center"><%= item.formula %></td>
 								<td class="center"><%= item.quantity_available %></td>
 								<td class="center"><%= item.currency %>&nbsp;<%= item.buy_it_now_price %></td>
-								<td class="center"><input type="text" name="price_<%= item.item_id%>" id="price_<%= item.item_id%>" style="width:90%" value="<%=  new_price(item.formula , item.country, @country_bprice)%>"></td>
+								<td class="center"><input type="text" name="price_<%= item.item_id%>" id="price_<%= item.item_id%>" style="width:90%" value="<%=  new_price(item.game_platform,item.formula , item.country, @country_bprice)%>"></td>
 								<td class="center">
 									<a class="btn btn-success" href="/items/<%= item.item_id %>/edit"> Edit Price</a>
 								</td>
 							</tr>
 					<% end %>
-					<tr><td colspan="9">
+					<tr><td colspan="11">
 						<div class="digg_pagination"  style="float:right;margin-bottom:10px;">
 							<%= will_paginate @items, :container => false %>
 						</div>
 					</tr>
 					<tr>
-				 		<td colspan="7"><button type="submit" class="btn btn-primary bulk_update" style="float:left">Bulk Price Update</button></td>	
+				 		<td colspan="11"><button type="submit" class="btn btn-primary bulk_update" style="float:left">Bulk Price Update</button></td>	
 					</tr>	
 				  <% else %>
 				     <tr><td colspan="7">No Item(s) found.</td></tr>
