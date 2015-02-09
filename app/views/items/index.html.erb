@@ -85,7 +85,7 @@
 						<td width="24%">Title</td>
 						<td width="7%">Game Platform</td>
 						<td width="7%"><%= sortable("game_coins_amount", "Game Coins Amount") %></td>
-						<td width="10%">Equation</td>
+						<td width="10%">Formula</td>
 						<td width="6%">Quantity Available</td>
 						<td width="7%">Price</td>
 						<td width="8%">New Price</td>
@@ -100,7 +100,7 @@
 								<td class="center"><img src="<%= item.picture_url %>" height="50px" width="75px"></td>
 								<td class="center"><a href="<%= item.view_url %>" target="_blank"><%= item.title %></a></td>
 								<td class="center"><%= item.game_platform %></td>
-								<td class="center"><%= item.game_coins_amount %></td>
+								<td class="center"><%=  number_with_delimiter(item.game_coins_amount) %></td>
 								<td class="center"><%= item.formula %></td>
 								<td class="center"><%= item.quantity_available %></td>
 								<td class="center"><%= item.currency %>&nbsp;<%= item.buy_it_now_price %></td>

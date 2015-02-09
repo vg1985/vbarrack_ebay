@@ -10,6 +10,6 @@ class JobsController < ApplicationController
   end
   
   def completed
-    @completed_jobs = CompletedJob.paginate(:page => params[:page]).order("created_at desc")
+    @completed_jobs = CompletedJob.where("created_at >= ?", Date.today-1.days).paginate(:page => params[:page]).order("created_at desc")
   end  
 end

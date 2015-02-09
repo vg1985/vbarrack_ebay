@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  
   helper_method  :sort_direction
   
   def check_session
@@ -28,6 +29,10 @@ class ApplicationController < ActionController::Base
         item_details = items.payload[:item_array][:item]
         item_updates_in_vbarrack(item_details)
        end
+       
+       ####Remove Inactive Items
+       Item.where("status !=?", "Active").destroy_all
+       Item.update_all({:status => "Synced"})
     end
   end
   
@@ -59,7 +64,7 @@ class ApplicationController < ActionController::Base
         
         item_hash = {:start_time => start_time, :end_time => end_time, :quantity_available => quantity_available, :quantity_sold => quantity_sold,
                      :title => title, :sub_title => subtitle, :picture_url => picture_url, :view_url => view_url, :sku => sku, :country => country,
-                     :currency => currency, :buy_it_now_price => buy_it_now_price, :category_id => category_id, :category_name => category_name
+                     :currency => currency, :buy_it_now_price => buy_it_now_price, :category_id => category_id, :category_name => category_name, :status => 'Active'
                     }
                    
         if item_info.present?
