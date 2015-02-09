@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
        end
        
        ####Remove Inactive Items
-       Item.where("status !=?", "Active").destroy_all
+       Item.destroy_all("status != 'Active'")
        Item.update_all({:status => "Synced"})
     end
   end
