@@ -50,7 +50,7 @@ class ItemsController < ApplicationController
   
   def edit
     item_details = EbayClient.api.get_item(:item_ID => params[:id])
-    raise item_details.inspect
+    #raise item_details.inspect
     @item = item_details.payload[:item]
     redirect_to items_path unless @item.present?
   end
