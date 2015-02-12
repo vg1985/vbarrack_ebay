@@ -17,21 +17,35 @@ class SetFormulasController < ApplicationController
       @items = @items.where("country =? ", params[:country]) 
       @country = Country.find_by_country(params[:country])
     end  
-    @items = @items.where("game_platform =?", params[:game_plateform]) if params[:game_plateform].present?
+    @items = @items.where("item_formulas.game_platform =?", params[:game_plateform]) if params[:game_plateform].present?
+    @items = @items.joins("INNER JOIN item_formulas ON (items.item_id = item_formulas.ebay_item_id)")
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @items }
     end
   end
+  
+  
+  def activity_logs
+    @actvity_logs = ActivityLog.paginate(:page => params[:page]).order("id DESC")
+  end
  
   def edit
-    @item = Item.find_by_id(params[:id])
+    @item_details  = Item.find_by_item_id(params[:id])
+    @item = ItemFormula.find_by_ebay_item_id(params[:id])
+    if @item.blank?
+      ItemFormula.create({:ebay_item_id => @item_details.item_id})
+      @item = ItemFormula.find_by_ebay_item_id(params[:id])
+    end  
+    
     #redirect_to set_formulas_path unless @item.present?
   end
   
   def update
-    @item = Item.find_by_id(params[:id])
-    if(@item.update_attributes(params[:item])) 
+    #abort
+    @item = ItemFormula.find_by_id(params[:id])
+    if(@item.update_attributes(params[:item_formula])) 
+       ActivityLog.create({:action => "Formula Update", :updated_by => session[:name], :item_id => @item.ebay_item_id, :updated_formula => params[:item_formula][:formula]})
        flash[:notice] = "Formula updated successfully."
        redirect_to set_formulas_path
     else 

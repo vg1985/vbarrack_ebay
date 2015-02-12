@@ -22,6 +22,7 @@ Ebay::Application.routes.draw do
    resources :set_formulas do
       collection do
         post :country
+        get :activity_logs
       end
     end
     
