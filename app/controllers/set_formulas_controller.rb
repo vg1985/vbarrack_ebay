@@ -17,8 +17,10 @@ class SetFormulasController < ApplicationController
       @items = @items.where("country =? ", params[:country]) 
       @country = Country.find_by_country(params[:country])
     end  
-    @items = @items.where("item_formulas.game_platform =?", params[:game_plateform]) if params[:game_plateform].present?
-    @items = @items.joins("INNER JOIN item_formulas ON (items.item_id = item_formulas.ebay_item_id)")
+    if params[:game_plateform].present?
+      @items = @items.where("item_formulas.game_platform =?", params[:game_plateform]) 
+      @items = @items.joins("INNER JOIN item_formulas ON (items.item_id = item_formulas.ebay_item_id)")
+    end  
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @items }
