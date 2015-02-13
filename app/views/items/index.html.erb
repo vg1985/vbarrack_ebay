@@ -82,14 +82,15 @@
 						<th width="3%"><input type="checkbox" id="all_chk">&nbsp;All</th>
 						<td width="9%">Item Id</td>
 						<td width="7%">Picture</td>
-						<td width="24%">Title</td>
+						<td width="21%">Title</td>
 						<td width="7%">Game Platform</td>
 						<td width="7%"><%= sortable("game_coins_amount", "Game Coins Amount") %></td>
 						<td width="10%">Formula</td>
 						<td width="6%">Quantity Available</td>
 						<td width="7%">Price</td>
 						<td width="9%">New Price</td>
-						<td width="11%">Actions</td>
+						<td width="6%">Synced Date</td>
+						<td width="8%">Actions</td>
 					</tr>
 				</thead>
 				<% if @items.present? %>
@@ -111,6 +112,7 @@
 								<td class="center"><%= item.quantity_available %></td>
 								<td class="center"><%= item.currency %>&nbsp;<%= item.buy_it_now_price %></td>
 								<td class="center"><input type="text" name="price_<%= item.item_id%>" id="price_<%= item.item_id%>" style="width:90%" value="<%=  new_price(g_platform,g_formula , item.country, @country_bprice)%>"></td>
+								<td class="center"><%= item.created_at %></td>
 								<td class="center">
 									<a class="btn btn-success" href="/items/<%= item.item_id %>/edit"> Edit Price</a>
 								</td>
