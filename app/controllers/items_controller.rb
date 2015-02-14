@@ -8,7 +8,7 @@ class ItemsController < ApplicationController
       @items = Item.active.paginate(:page => params[:page])
     
       if params[:sort].present?
-       @items = @items.order("#{params[:sort]} #{params[:direction]}")
+       @items = @items.order("item_formulas.#{params[:sort]} #{params[:direction]}")
       else
         @items = @items.order("end_time ASC")
       end 
@@ -17,10 +17,10 @@ class ItemsController < ApplicationController
         @items = @items.where("country =? ", params[:country])
         @country_bprice = Country.find_by_country(params[:country])
       end  
-      if params[:game_plateform].present?
-        @items = @items.where("item_formulas.game_platform =?", params[:game_plateform]) 
-        @items = @items.joins("INNER JOIN item_formulas ON (items.item_id = item_formulas.ebay_item_id)")
-      end
+      
+        @items = @items.where("item_formulas.game_platform =?", params[:game_plateform]) if params[:game_plateform].present?
+        @items = @items.joins("LEFT JOIN item_formulas ON (items.item_id = item_formulas.ebay_item_id)")
+      
       respond_to do |format|
         format.html # index.html.erb
         format.json { render json: @items }
