@@ -81,4 +81,16 @@ class ItemsController < ApplicationController
     redirect_to pending_jobs_path
   end
   
+  def bulk_qupdate
+    if(params[:item].present?)
+      params[:item].each do |item_id|
+        
+        Item.delay.quantity_update(item_id, params["quantity_#{item_id}"]) if params["quantity_#{item_id}"].present?
+      end
+    end  
+    
+    flash[:notice] = "Quantity update process has been queued up. Please refresh the items page after some time to reflect the updated price."
+    redirect_to pending_jobs_path
+  end
+  
 end

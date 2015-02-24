@@ -30,6 +30,18 @@ module ApplicationHelper
     new_price
   end
   
+  def new_quantity(is_country, qua_details)
+    new_quantity = ''
+    if(is_country.present?)
+      unless qua_details.present?
+        qua_details = Country.find_by_country(is_country)
+      end     
+      new_quantity = qua_details.quantity if qua_details.present?
+    end
+    new_quantity
+  end
+  
+  
   def sortable(column, title = nil)
     title ||= column.titleize
     css_class = column == params[:sort] ? "current #{sort_direction}" : nil

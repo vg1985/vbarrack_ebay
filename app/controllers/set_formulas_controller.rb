@@ -58,9 +58,9 @@ class SetFormulasController < ApplicationController
   def country
     country_bprice_details = Country.find_by_country(params[:country])
     if country_bprice_details.present?
-      country_bprice_details.update_attributes({"base_price" => params[:price], "ps_base_price" => params[:ps_price]})
+      country_bprice_details.update_attributes({"base_price" => params[:price], "ps_base_price" => params[:ps_price], "quantity" => params[:quantity]})
     else
-      Country.create({"country" => params[:country], "base_price" => params[:price], "ps_base_price" => params[:ps_price]})
+      Country.create({"country" => params[:country], "base_price" => params[:price], "ps_base_price" => params[:ps_price], "quantity" => params[:quantity]})
     end
     flash[:notice] = "Base price updated successfully."
      redirect_to set_formulas_path(:country => params[:country])

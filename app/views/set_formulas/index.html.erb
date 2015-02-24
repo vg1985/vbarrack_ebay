@@ -29,6 +29,13 @@
 							<%= text_field_tag :ps_price, @country.present? ? @country.ps_base_price : '' %>
 						</div>	
 					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="inputError">Quantity:</label>
+						<div class="controls">
+							<%= text_field_tag :quantity, @country.present? ? @country.quantity : '' %>
+						</div>	
+					</div>
 					<%= hidden_field_tag 'country', params[:country]%>
 					
 					<div class="form-actions">

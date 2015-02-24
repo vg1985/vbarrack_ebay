@@ -29,7 +29,8 @@
 				<thead>
 					<tr>
 						<td width="15%">Item Id</td>
-						<td width="15%">Price(Send to Update)</td>
+						<td width="15%">Action Type</td>
+						<td width="15%">Updated entity(Send to Update)</td>
 						<td width="40%">Error</td>
 						<td width="10%">Status</td>
 						<td width="20%">Created Date</td>
@@ -39,6 +40,7 @@
 				<% @completed_jobs.each do |cjob| %>
 					<tr>
 						<td class="center"><%= cjob.item_id %></td>
+						<td class="center"><%= cjob.job_type %></td>
 						<td class="center"><%= cjob.uppdated_price %></td>
 						<td class="center"><%= cjob.error %></a></td>
 						<td class="center"><%= cjob.status.eql?(1) ? "Success" : "Failed" %></td>

@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
   layout "authenticate"
   
   def login
-    redirect_to items_url unless session[:id].nil?
+    redirect_to root_url unless session[:id].nil?
    
   end
   

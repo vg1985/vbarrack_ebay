@@ -29,6 +29,7 @@ Ebay::Application.routes.draw do
    resources :items do
      collection do
        post :bulk_update
+       post :bulk_qupdate
      end
    end
      

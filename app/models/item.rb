@@ -15,4 +15,18 @@ class Item < ActiveRecord::Base
     end  
   
   end
+  
+  def self.quantity_update(item, quantity)
+    ebay = EbayClient.api.revise_inventory_status(:inventory_status => {:item_ID => item, :quantity => quantity})
+    
+    if(ebay.present? && ebay.errors.count < 1)
+       item_details = Item.find_by_item_id(item)
+       item_details.update_attributes({:quantity_available => quantity})
+       CompletedJob.create(:item_id => item, :uppdated_price => quantity,  :status => 1, :job_type => "quantity")
+    else
+       CompletedJob.create(:item_id => item, :uppdated_price => quantity, :job_type => "quantity", :error => ebay.errors.join("</br>"), :status => 0)
+    end  
+      
+  end
+
 end

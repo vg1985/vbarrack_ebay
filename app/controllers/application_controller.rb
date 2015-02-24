@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   
   def sync_with_ebay
     items = EbayClient.api.get_seller_list(:sort => 2, :listing_type => "FixedPriceItem",  :granularity_level => "Coarse", :end_time_from => Date.today, :end_time_to => Date.today+119.days, :pagination => {:entries_per_page => 100})
+    #raise items.payload[:item_array][:item][0].inspect
     #raise items.inspect
     if items.present?
        item_details = items.payload[:item_array][:item]
@@ -42,7 +43,7 @@ class ApplicationController < ActionController::Base
         item_id = item_detail[:item_id]
         start_time = Date.parse(item_detail[:listing_details][:start_time])
         end_time = Date.parse(item_detail[:listing_details][:end_time])
-        quantity_available = item_detail[:quantity]
+        quantity_available = item_detail[:quantity].to_i - item_detail[:selling_status][:quantity_sold].to_i
         quantity_sold = item_detail[:selling_status][:quantity_sold]
         bid_count = item_detail[:selling_status][:bid_count]
         
