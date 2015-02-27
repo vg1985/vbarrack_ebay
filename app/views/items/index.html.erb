@@ -47,6 +47,64 @@
 
 </div><!--/row-->
 
+
+
+
+<div class="row-fluid sortable">
+	<div class="box span12">
+		<div class="box-header well" data-original-title>
+			<h2>Refine Price Calculation</h2>
+		</div>
+		
+		
+		<div class="box-content">
+			<%= form_tag "#", {:class => "form-horizontal", :method => 'post'}  do |f| %>
+				<input type="hidden" id="crefine" value="<%= items_path({:country => params[:country], :page => params[:page], :game_plateform => params[:game_plateform]})%>">
+				<fieldset>
+					<div class="control-group">
+						<label class="control-label" for="inputError">Discount:</label>
+						<div class="controls">
+							<%= text_field_tag :discount, params[:discount], {:maxlength => 2} %>
+							<button type="button" class="btn btn-primary" id="discount_button">
+								Apply
+							</button>
+						</div>	
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="inputError">Plus:</label>
+						<div class="controls">
+							<%= text_field_tag :plus, params[:plus],  {:maxlength => 5} %>
+							<button type="button" class="btn btn-primary" id="plus_button">
+							Apply
+						</button>
+						</div>	
+					</div>
+					
+					
+					<div class="control-group">
+						<label class="control-label" for="inputError">Minus:</label>
+						<div class="controls">
+							<%= text_field_tag :minus, params[:minus],  {:maxlength => 5} %>
+							<button type="button" class="btn btn-primary" id="minus_button">
+							Apply
+						</button>
+						</div>	
+					</div>
+					
+					
+					
+					
+					
+					
+				</fieldset>
+			<% end %>
+	    </div>
+	</div><!--/span-->
+
+</div><!--/row-->
+
+
 		<% if  params[:country].present? && @country_bprice.present? %>
 		<div style="padding-left:10px;padding-top:10px">
 			<strong>Base Price for XBOX:</strong><span style="padding-left:10px"> <%= @country_bprice.base_price %></span>
@@ -108,11 +166,12 @@
 					item_formula = ItemFormula.find_by_ebay_item_id(item.item_id)
 					g_platform = item_formula.present? ? item_formula.game_platform : ''
 					g_formula = item_formula.present? ? item_formula.formula : ''
-					
+					new_price = new_price(g_platform,g_formula , item.country, @country_bprice)
+					cls = (new_price == 0) ? "style=background-color:red" : 'test'
 					%>
-							<tr>
+							<tr >
 								<td class="center"><input type="checkbox" name="item[]" value="<%= item.item_id %>" class="chk"></td>
-								<td class="center"><%= item.item_id %></td>
+								<td class="center" <%= cls %>><%= item.item_id %></td>
 								<td class="center"><img src="<%= item.picture_url %>" height="50px" width="50px"></td>
 								<td class="center"><a href="<%= item.view_url %>" target="_blank"><%= item.title %></a></td>
 								<td class="center"><%= g_platform %></td>
@@ -123,7 +182,7 @@
 								
 								
 								<td class="center"><%= item.currency %>&nbsp;<%= item.buy_it_now_price %></td>
-								<td class="center"><input type="text" name="price_<%= item.item_id%>" id="price_<%= item.item_id%>" style="width:90%" value="<%=  new_price(g_platform,g_formula , item.country, @country_bprice)%>"></td>
+								<td class="center"><input type="text" name="price_<%= item.item_id%>" id="price_<%= item.item_id%>" style="width:90%" value="<%=  new_price %>"></td>
 								<td class="center">
 									<a class="btn btn-success" href="/items/<%= item.item_id %>/edit"> Edit Price</a>
 								</td>
@@ -135,7 +194,7 @@
 						</div>
 					</tr>
 					<tr>
-				 		<td colspan="11"><button type="submit" class="btn btn-primary bulk_update" style="float:left">Bulk Price Update</button></td>	
+				 		<td colspan="12"><button type="submit" class="btn btn-primary bulk_update" style="float:left">Bulk Price Update</button></td>	
 					</tr>	
 				  <% else %>
 				     <tr><td colspan="7">No Item(s) found.</td></tr>
@@ -201,6 +260,8 @@
 				jQuery("#bulk_form").submit();
 			}
 		})
+		
+		
 	});
 	
 	
@@ -212,6 +273,43 @@
 		jQuery("#cancel_btn").click(function(){
 			location.href = "<%= items_path %>";
 		});	
+		
+		jQuery("#discount_button").click(function(e){
+			e.preventDefault();
+			var d = jQuery.trim(jQuery("#discount").val());
+			if(d.length < 1) {
+				alert('Please enter discount.');
+				return false;
+			} else {
+				location.href = jQuery("#crefine").val()+"&discount="+d;
+			}	
+		});	
+		
+		jQuery("#plus_button").click(function(e){
+			e.preventDefault();
+			var d = jQuery.trim(jQuery("#plus").val());
+			
+			if(d.length < 1) {
+				alert('Please enter plus amount.');
+				return false;
+			} else {
+				location.href = jQuery("#crefine").val()+"&plus="+d;
+			}	
+		});	
+		
+		jQuery("#minus_button").click(function(e){
+			e.preventDefault();
+			var d = jQuery.trim(jQuery("#minus").val());
+			
+			if(d.length < 1) {
+				alert('Please enter minus amount.');
+				return false;
+			} else {
+				location.href = jQuery("#crefine").val()+"&minus="+d;
+			}	
+		});	
+		
+		
 	});
 </script>	
 

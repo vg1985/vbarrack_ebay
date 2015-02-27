@@ -1,6 +1,7 @@
 module ApplicationHelper
   
   def new_price(game_platform, formula, is_country, baseprice_details)
+    #raise params.inspect
     new_price = ''
     if(formula.present? && is_country.present?)
       unless baseprice_details.present?
@@ -19,6 +20,7 @@ module ApplicationHelper
           formula = formula.gsub('base_price', "(#{baseprice_details.ps_base_price.to_s})")
           begin
             new_price = eval(formula).round(2)
+           
           rescue
            
           end
@@ -26,7 +28,22 @@ module ApplicationHelper
       end  
     
     end
-   
+    
+    if new_price.present?
+      if params[:discount].present?
+        new_price = (new_price - ((new_price * params[:discount].to_f).to_f / 100)).round(2)
+      end
+      if params[:plus].present?
+        new_price = (new_price + params[:plus].to_f).round(2)
+      end
+      if params[:minus].present?
+        new_price = (new_price - params[:minus].to_f).round(2)
+      end
+       new_price = new_price < 0 ? 0 : new_price
+
+    end
+      
+      
     new_price
   end
   

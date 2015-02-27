@@ -5,6 +5,7 @@ class ItemsController < ApplicationController
   def index
     sync_with_ebay if params[:sync] == "sync"
     if @country_wise_items.present?
+      params[:page] = params[:page].present? ? params[:page] : 1
       @items = Item.active.paginate(:page => params[:page])
     
       if params[:sort].present?
